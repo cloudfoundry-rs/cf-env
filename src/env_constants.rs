@@ -1,0 +1,17 @@
+pub const CF_INSTANCE_ADDR: &str = "CF_INSTANCE_ADDR";
+pub const CF_INSTANCE_GUID: &str = "CF_INSTANCE_GUID";
+pub const CF_INSTANCE_INDEX: &str = "CF_INSTANCE_INDEX";
+pub const CF_INSTANCE_IP: &str = "CF_INSTANCE_IP";
+pub const CF_INSTANCE_INTERNAL_IP: &str = "CF_INSTANCE_INTERNAL_IP";
+pub const CF_INSTANCE_PORT: &str = "CF_INSTANCE_PORT";
+pub const CF_INSTANCE_PORTS: &str = "CF_INSTANCE_PORTS";
+pub const DATABASE_URL: &str = "DATABASE_URL";
+pub const HOME: &str = "HOME";
+pub const LANG: &str = "LANG";
+pub const MEMORY_LIMIT: &str = "MEMORY_LIMIT";
+pub const PORT: &str = "PORT";
+pub const PWD: &str = "PWD";
+pub const TMPDIR: &str = "TMPDIR";
+pub const USER: &str = "USER";
+pub const VCAP_APPLICATION: &str = "VCAP_APPLICATION";
+pub const VCAP_SERVICES: &str = "VCAP_SERVICES";
