@@ -44,6 +44,7 @@ impl Display for Error {
     }
 }
 
+#[derive(Serialize, Deserialize, PartialEq, Debug)]
 pub enum ByteUnit {
     Gigabyte,
     Megabyte,
@@ -58,5 +59,79 @@ impl ByteUnit {
             'G' | 'g' => Ok(Self::Gigabyte),
             _ => Err(Error::UnkownMemoryUnit),
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn byte_unit_giga() {
+        let unit = crate::ByteUnit::from_string("2G".to_string());
+
+        assert!(unit.is_ok());
+        assert_eq!(unit.unwrap(), crate::ByteUnit::Gigabyte);
+    }
+
+    #[test]
+    fn display_env_not_set() {
+        assert_eq!(
+            format!("{}", crate::Error::EnvNotSet(crate::USER.to_string())),
+            format!("environment variable {:?} is not set", crate::USER)
+        );
+    }
+
+    #[test]
+    fn display_json_mal_formed() {
+        assert_eq!(
+            format!("{}", crate::Error::JsonMalformed(crate::USER.to_string())),
+            format!("the json from {:?} could not be parsed", crate::USER)
+        );
+    }
+
+    #[test]
+    fn display_service_not_present() {
+        assert_eq!(
+            format!(
+                "{}",
+                crate::Error::ServiceNotPresent(crate::USER.to_string())
+            ),
+            format!("service {:?} is not present in VCAP_SERVICES", crate::USER)
+        );
+    }
+
+    #[test]
+    fn display_service_type_not_present() {
+        assert_eq!(
+            format!(
+                "{}",
+                crate::Error::ServiceTypeNotPresent(crate::USER.to_string())
+            ),
+            format!(
+                "service type {:?} is not present in VCAP_SERVICES",
+                crate::USER
+            )
+        );
+    }
+
+    #[test]
+    fn display_memory_unit_unkown() {
+        assert_eq!(
+            format!("{}", crate::Error::UnkownMemoryUnit),
+            "memory unit unkown".to_string()
+        );
+    }
+
+    #[test]
+    fn display_env_mal_formed() {
+        assert_eq!(
+            format!(
+                "{}",
+                crate::Error::EnvMalformed(crate::USER.to_string(), "none".to_string())
+            ),
+            format!(
+                "the env variable {:?} does not match the required criterial. \"none\"",
+                crate::USER
+            )
+        );
     }
 }

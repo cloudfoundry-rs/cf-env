@@ -1,4 +1,7 @@
-# CF Env library
+# Cloud Foundry Environment crate
+[![codecov](https://codecov.io/gh/somehowchris/cf-env/branch/main/graph/badge.svg?token=8RVBW5DIMN)](https://codecov.io/gh/somehowchris/cf-env) ![Crates.io](https://img.shields.io/crates/v/cf-env) 
+
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/somehowchris/cf-env) 
 
 A small library to get you going in not time with typed environment variables for you Cloud Foundry envirnoment.
 
@@ -45,6 +48,3 @@ let service: Service<Value> = cf_env::get_service_by_name("my_db").unwrap();
 
 let uri = service.credentials["uri"].as_str().unwrap();
 ```
-
-
-__FYI, some tests have been written, more to follow in the next few days, tough everything should work__

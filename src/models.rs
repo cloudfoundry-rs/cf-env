@@ -3,6 +3,7 @@ use guid_create::GUID;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
+#[derive(Serialize, Deserialize, PartialEq, Debug)]
 pub struct MemoryLimit {
     pub unit: ByteUnit,
     pub size: u128,
@@ -26,14 +27,14 @@ impl MemoryLimit {
     }
 }
 
-#[derive(Serialize, Deserialize, Clone)]
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
 pub struct ApplicationLimits {
     pub disk: u128,
     pub fds: u128,
     pub mem: u128,
 }
 
-#[derive(Clone)]
+#[derive(Clone, Debug, PartialEq)]
 pub struct LocalGuid(GUID);
 use serde::{de, Deserializer, Serializer};
 
@@ -55,7 +56,7 @@ impl Serialize for LocalGuid {
     }
 }
 
-#[derive(Serialize, Deserialize, Clone)]
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
 pub struct Application {
     pub application_id: LocalGuid,
     pub application_name: String,
@@ -70,7 +71,7 @@ pub struct Application {
     pub organization_name: String,
     pub space_id: LocalGuid,
     pub space_name: String,
-    pub start: String,
+    pub start: Option<String>,
     pub started_at: Option<String>,
     pub started_at_timestamp: Option<String>,
     pub state_timestamp: Option<String>,
@@ -78,24 +79,24 @@ pub struct Application {
     pub version: LocalGuid,
 }
 
-#[derive(Serialize, Deserialize, Clone)]
+#[derive(Serialize, Deserialize, Clone, PartialEq, Debug)]
 pub struct ServiceVolumeMount {
     pub container_dir: String,
     pub device_type: String,
     pub mode: String,
 }
 
-#[derive(Serialize, Deserialize, Clone)]
-pub struct Service<C = Value> {
+#[derive(Serialize, Deserialize, Clone, PartialEq, Debug)]
+pub struct Service<Credentials = Value> {
     pub binding_guid: LocalGuid,
-    pub binding_name: String,
+    pub binding_name: Option<String>,
     pub instance_guid: LocalGuid,
     pub instance_name: String,
     pub name: String,
     pub label: String,
     pub tags: Vec<String>,
     pub plan: String,
-    pub credentials: C,
-    pub syslog_drain_url: String,
+    pub credentials: Credentials,
+    pub syslog_drain_url: Option<String>,
     pub volume_mounts: Vec<ServiceVolumeMount>,
 }
