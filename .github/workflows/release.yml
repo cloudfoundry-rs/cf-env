@@ -16,7 +16,7 @@ jobs:
           with:
             token: "${{ github.token }}"
             target_url: https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}
-            environment: docker-hub
+            environment: crates.io
 
         - name: Update deployment status (pending)
           uses: chrnorm/deployment-status@releases/v1
