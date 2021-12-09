@@ -2,7 +2,14 @@
 name = "cf-env"
 version = "0.1.0"
 edition = "2018"
-
+description = "Crate to parse Cloud Foundry environment variables with types and checks. Get you off that boilerplate code and care about what you actually need to code"
+license = "MIT OR Apache-2.0"
+keywords = ["cloudfoundry", "cf", "cf-for-k8s", "Cloud Foundry", "CloudFoundry"]
+categories = ["config", "web-programming", "accessibility"]
+homepage = "https://github.com/somehowchris/cf-env-rs"
+repository = "https://github.com/somehowchris/cf-env-rs"
+documentation = "https://docs.rs/cf-env"
+exclude = [".github", ".gitpod.yml"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
