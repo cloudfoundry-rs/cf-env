@@ -24,7 +24,9 @@ use std::panic;
 use std::path::PathBuf;
 use std::str::FromStr;
 
-/// Checks if `VCAP_APPLICATION` is defined, if so uses as the indicator that the app is running in a Cloud Foundry Environment
+/// Checks if `VCAP_APPLICATION` is defined, if so uses as the indicator that the app is running in a Cloud Foundry Environment.
+///
+/// Use this with caution. To use the flexibility of cargo and optimization of rust and llvm you should only use this if there is no other way. One other possible way would be to use features flags for your binaries and use them to identify for which environment you build.
 pub fn is_cf_env() -> bool {
     env::var(VCAP_APPLICATION).is_ok()
 }
