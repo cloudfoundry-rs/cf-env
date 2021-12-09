@@ -1,0 +1,24 @@
+name: Cargo Check
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: ["*"]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+      - name: Run fmt
+        run: cargo fmt -- --check
+      - name: Run clippy
+        run: cargo clippy -- --deny=warnings
+      - name: Run check
+        run: cargo check

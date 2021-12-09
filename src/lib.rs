@@ -231,13 +231,13 @@ pub fn get_services() -> Result<ServiceMap, Error> {
 /// ```
 ///
 /// There is no need for typed credentials if you would like to parse it anyway
-/// 
+///
 /// ```no_run
 /// use serde_json::Value;
 /// use cf_env::Service;
-/// 
+///
 /// let service: Service<Value> = cf_env::get_service_by_name("my_db").unwrap();
-/// 
+///
 /// let uri = service.credentials["uri"].as_str().unwrap();
 /// ```
 pub fn get_service_by_name<T>(name: &str) -> Result<Service<T>, Error>
@@ -269,7 +269,7 @@ where
 }
 
 /// Get's you a a list services from`VCAP_SERVICES` by their type
-/// 
+///
 /// This allows you to get the services with their credentials. The type `T` can be used to have a typed credentials struct. As the format of credentials is up to your provider it defaults to a generic Value from serde_json.
 ///
 /// ```no_run
@@ -287,15 +287,15 @@ where
 ///
 /// let services = cf_env::get_services_by_type::<CustomCredentials>("a_type_of_service").unwrap();
 /// ```
-/// 
+///
 /// There is no need for typed credentials if you would like to parse it anyway
-/// 
+///
 /// ```no_run
 /// use serde_json::Value;
 /// use cf_env::Service;
-/// 
+///
 /// let services: Vec<Service<Value>>  = cf_env::get_services_by_type("a_type_of_service").unwrap();
-/// 
+///
 /// let uri = services[0].credentials["uri"].as_str().unwrap();
 /// ```
 pub fn get_services_by_type<T>(type_name: &str) -> Result<Vec<Service<T>>, Error>
@@ -341,7 +341,10 @@ mod tests {
 
         let instance_addr = instance_addr_result.unwrap();
         assert_eq!(instance_addr.to_string(), "10.24.8.2:8080".to_string());
-        assert_eq!(instance_addr.ip(), "10.24.8.2".parse::<std::net::IpAddr>().unwrap());
+        assert_eq!(
+            instance_addr.ip(),
+            "10.24.8.2".parse::<std::net::IpAddr>().unwrap()
+        );
         assert_eq!(instance_addr.port(), 8080);
     }
 
@@ -367,7 +370,10 @@ mod tests {
         let guid_result = crate::get_instance_guid();
 
         assert_eq!(guid_result.is_ok(), true);
-        assert_eq!(guid_result.unwrap(), guid_create::GUID::parse("046463bc-1ba9-4046-bf5a-bd95672ee871").unwrap());
+        assert_eq!(
+            guid_result.unwrap(),
+            guid_create::GUID::parse("046463bc-1ba9-4046-bf5a-bd95672ee871").unwrap()
+        );
     }
 
     #[test]
