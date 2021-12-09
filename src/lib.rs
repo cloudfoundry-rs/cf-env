@@ -337,7 +337,7 @@ mod tests {
         std::env::set_var("CF_INSTANCE_ADDR", "10.24.8.2:8080");
         let instance_addr_result = crate::get_instance_address();
 
-        assert_eq!(instance_addr_result.is_ok(), true);
+        assert!(instance_addr_result.is_ok());
 
         let instance_addr = instance_addr_result.unwrap();
         assert_eq!(instance_addr.to_string(), "10.24.8.2:8080".to_string());
@@ -353,7 +353,7 @@ mod tests {
         std::env::set_var("CF_INSTANCE_ADDR", "10.24.8.2:port");
         let instance_addr_result = crate::get_instance_address();
 
-        assert_eq!(instance_addr_result.is_ok(), false);
+        assert!(!instance_addr_result.is_ok());
     }
 
     #[test]
@@ -361,7 +361,7 @@ mod tests {
         std::env::set_var("CF_INSTANCE_ADDR", "host:8080");
         let instance_addr_result = crate::get_instance_address();
 
-        assert_eq!(instance_addr_result.is_ok(), false);
+        assert!(!instance_addr_result.is_ok());
     }
 
     #[test]
@@ -369,7 +369,7 @@ mod tests {
         std::env::set_var("CF_INSTANCE_GUID", "046463bc-1ba9-4046-bf5a-bd95672ee871");
         let guid_result = crate::get_instance_guid();
 
-        assert_eq!(guid_result.is_ok(), true);
+        assert!(guid_result.is_ok());
         assert_eq!(
             guid_result.unwrap(),
             guid_create::GUID::parse("046463bc-1ba9-4046-bf5a-bd95672ee871").unwrap()
@@ -381,7 +381,7 @@ mod tests {
         std::env::set_var("CF_INSTANCE_GUID", "046463bc-1ba9-4046-bf5a-bd95672ee81");
         let guid_result = crate::get_instance_guid();
 
-        assert_eq!(guid_result.is_ok(), false);
+        assert!(!guid_result.is_ok());
     }
 
     #[test]
@@ -389,7 +389,7 @@ mod tests {
         std::env::set_var("CF_INSTANCE_INDEX", "8");
         let index_result = crate::get_instance_index();
 
-        assert_eq!(index_result.is_ok(), true);
+        assert!(index_result.is_ok());
         assert_eq!(index_result.unwrap(), 8);
     }
 
@@ -398,7 +398,7 @@ mod tests {
         std::env::set_var("CF_INSTANCE_INDEX", "-1");
         let index_result = crate::get_instance_index();
 
-        assert_eq!(index_result.is_ok(), false);
+        assert!(!index_result.is_ok());
     }
 
     #[test]
@@ -406,6 +406,56 @@ mod tests {
         std::env::set_var("CF_INSTANCE_INDEX", "hello");
         let index_result = crate::get_instance_index();
 
-        assert_eq!(index_result.is_ok(), false);
+        assert!(!index_result.is_ok());
+    }
+
+    #[test]
+    fn get_instance_ip_invalid_domain() {
+        std::env::set_var("CF_INSTANCE_IP", "me.com");
+        let index_result = crate::get_instance_ip();
+
+        assert!(!index_result.is_ok());
+    }
+
+    #[test]
+    fn get_instance_ip_invalid_ip() {
+        std::env::set_var("CF_INSTANCE_IP", "670.120.01.94");
+        let index_result = crate::get_instance_ip();
+
+        assert!(!index_result.is_ok());
+    }
+
+    #[test]
+    fn get_instance_ip_valid() {
+        std::env::set_var("CF_INSTANCE_IP", "192.168.2.3");
+        let index_result = crate::get_instance_ip();
+
+        assert!(index_result.is_ok());
+        assert_eq!(index_result.unwrap().to_string(), "192.168.2.3".to_string());
+    }
+
+    #[test]
+    fn get_instance_internal_ip_invalid_domain() {
+        std::env::set_var("CF_INSTANCE_INTERNAL_IP", "me.com");
+        let index_result = crate::get_instance_internal_ip();
+
+        assert!(!index_result.is_ok());
+    }
+
+    #[test]
+    fn get_instance_internal_ip_invalid_ip() {
+        std::env::set_var("CF_INSTANCE_INTERNAL_IP", "670.120.01.94");
+        let index_result = crate::get_instance_internal_ip();
+
+        assert!(!index_result.is_ok());
+    }
+
+    #[test]
+    fn get_instance_internal_ip_valid() {
+        std::env::set_var("CF_INSTANCE_INTERNAL_IP", "192.168.2.3");
+        let index_result = crate::get_instance_internal_ip();
+
+        assert!(index_result.is_ok());
+        assert_eq!(index_result.unwrap().to_string(), "192.168.2.3".to_string());
     }
 }
