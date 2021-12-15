@@ -15,6 +15,13 @@ github:
 # add a "Review in Gitpod" button to the pull request's description (defaults to false)
     addBadge: false
 
+tasks:
+  - name: Cargo build
+    init: |
+      time cargo build
+      time cargo build --release
+    command: exit
+
 vscode:
   extensions:
     - rust-lang.rust
