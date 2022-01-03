@@ -34,49 +34,27 @@ pub struct ApplicationLimits {
     pub mem: u128,
 }
 
-#[derive(Clone, Debug, PartialEq)]
-pub struct LocalGuid(GUID);
-use serde::{de, Deserializer, Serializer};
-
-impl<'de> Deserialize<'de> for LocalGuid {
-    fn deserialize<D>(deserializer: D) -> Result<LocalGuid, D::Error>
-    where
-        D: Deserializer<'de>,
-    {
-        let string_guid = String::deserialize(deserializer)?;
-        let guid = GUID::parse(&string_guid)
-            .map_err(|_| de::Error::custom(format!("cannot convert {} to guid", string_guid)))?;
-        Ok(LocalGuid(guid))
-    }
-}
-
-impl Serialize for LocalGuid {
-    fn serialize<S: Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error> {
-        serializer.serialize_str(&*self.0.to_string())
-    }
-}
-
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
 pub struct Application {
-    pub application_id: LocalGuid,
+    pub application_id: GUID,
     pub application_name: String,
     pub application_uris: Vec<String>,
-    pub application_version: LocalGuid,
+    pub application_version: GUID,
     pub cf_api: String,
     pub limits: ApplicationLimits,
     pub name: String,
     pub process_id: String,
     pub process_type: String,
-    pub organization_id: LocalGuid,
+    pub organization_id: GUID,
     pub organization_name: String,
-    pub space_id: LocalGuid,
+    pub space_id: GUID,
     pub space_name: String,
     pub start: Option<String>,
     pub started_at: Option<String>,
     pub started_at_timestamp: Option<String>,
     pub state_timestamp: Option<String>,
     pub uris: Vec<String>,
-    pub version: LocalGuid,
+    pub version: GUID,
 }
 
 #[derive(Serialize, Deserialize, Clone, PartialEq, Debug)]
@@ -88,9 +66,9 @@ pub struct ServiceVolumeMount {
 
 #[derive(Serialize, Deserialize, Clone, PartialEq, Debug)]
 pub struct Service<Credentials = Value> {
-    pub binding_guid: LocalGuid,
+    pub binding_guid: GUID,
     pub binding_name: Option<String>,
-    pub instance_guid: LocalGuid,
+    pub instance_guid: GUID,
     pub instance_name: String,
     pub name: String,
     pub label: String,
