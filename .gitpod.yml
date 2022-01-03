@@ -31,3 +31,7 @@ vscode:
     - swellaby.vscode-rust-test-adapter
     - streetsidesoftware.code-spell-checker
     - vadimcn.vscode-lldb
+
+
+image:
+  file: .gitpod.Dockerfile
