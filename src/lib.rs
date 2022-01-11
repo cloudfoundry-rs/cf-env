@@ -6,6 +6,9 @@
 //! - Cloud Foundry app instance set variables, most of the times starting with `CF_`
 //!
 //! It's meant to get you away from boilerplating and get you started with typed variables while keeping simplicity
+#![deny(clippy::all, clippy::cargo)]
+#![forbid(unsafe_code)]
+
 
 pub mod constants;
 pub mod enums;
