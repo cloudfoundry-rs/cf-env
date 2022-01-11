@@ -9,7 +9,6 @@
 #![deny(clippy::all, clippy::cargo)]
 #![forbid(unsafe_code)]
 
-
 pub mod constants;
 pub mod enums;
 pub mod models;
