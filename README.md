@@ -16,7 +16,7 @@ Goals:
 Getting this crate is easy as adding it to your dependencies
 ```toml
 [dependencies]
-cf-env = "0.1.4"
+cf-env = "0.1.5"
 ```
 
 After that, just check what you need and get it, you may wanna check out the [docs.rs page](https://docs.rs/cf-env/). For example `CF_INSTANCE_INDEX`
