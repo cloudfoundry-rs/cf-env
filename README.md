@@ -1,4 +1,4 @@
-# Cloud Foundry Environment crate
+# Cloud Foundry Environment
 [![codecov](https://codecov.io/gh/somehowchris/cf-env/branch/main/graph/badge.svg?token=8RVBW5DIMN)](https://codecov.io/gh/somehowchris/cf-env) ![Crates.io](https://img.shields.io/crates/v/cf-env) 
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/somehowchris/cf-env) 
@@ -16,7 +16,7 @@ Goals:
 Getting this crate is easy as adding it to your dependencies
 ```toml
 [dependencies]
-cf-env = "0.1.4"
+cf-env = "0.1.5"
 ```
 
 After that, just check what you need and get it, you may wanna check out the [docs.rs page](https://docs.rs/cf-env/). For example `CF_INSTANCE_INDEX`
