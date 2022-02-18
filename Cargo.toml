@@ -1,6 +1,6 @@
 [package]
 name = "cf-env"
-version = "0.1.4"
+version = "0.1.6"
 edition = "2021"
 description = "Crate to parse Cloud Foundry environment variables with types and checks. Get you off that boilerplate code and care about what you actually need to code"
 license = "MIT OR Apache-2.0"
@@ -14,7 +14,7 @@ exclude = [".github", ".gitpod.yml"]
 
 [dependencies]
 serde = { version = "1.0.136", features = ["derive"] }
-serde_json = "1.0.78"
+serde_json = "1.0.79"
 guid-create = { version="0.2.0", features = [
     "serde",
 ] }
