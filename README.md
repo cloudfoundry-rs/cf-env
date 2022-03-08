@@ -3,7 +3,7 @@
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/somehowchris/cf-env) 
 
-A small library to get you going in not time with typed environment variables for you Cloud Foundry envirnoment.
+A small library to get you going in no time with typed environment variables for you Cloud Foundry envirnoment.
 
 Goals:
  - Remove boilerplate code for projects using cf
