@@ -1,6 +1,6 @@
 [package]
 name = "cf-env"
-version = "0.1.6"
+version = "0.1.7"
 edition = "2021"
 description = "Crate to parse Cloud Foundry environment variables with types and checks. Get you off that boilerplate code and care about what you actually need to code"
 license = "MIT OR Apache-2.0"
