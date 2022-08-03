@@ -22,7 +22,7 @@ impl MemoryLimit {
                     )),
                 }
             }
-            Err(_) => Err(Error::UnkownMemoryUnit),
+            Err(_) => Err(Error::UnknownMemoryUnit),
         }
     }
 }

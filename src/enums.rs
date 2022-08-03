@@ -8,7 +8,7 @@ pub enum Error {
     JsonMalformed(String),
     ServiceNotPresent(String),
     ServiceTypeNotPresent(String),
-    UnkownMemoryUnit,
+    UnknownMemoryUnit,
 }
 
 impl Display for Error {
@@ -39,7 +39,7 @@ impl Display for Error {
                 "the env variable {:?} does not match the required criterial. {:?}",
                 variable_name, comment
             ),
-            Self::UnkownMemoryUnit => write!(formatter, "memory unit unkown"),
+            Self::UnknownMemoryUnit => write!(formatter, "memory unit unknown"),
         }
     }
 }
@@ -57,7 +57,7 @@ impl ByteUnit {
         match last_char {
             'M' | 'm' => Ok(Self::Megabyte),
             'G' | 'g' => Ok(Self::Gigabyte),
-            _ => Err(Error::UnkownMemoryUnit),
+            _ => Err(Error::UnknownMemoryUnit),
         }
     }
 }
@@ -65,7 +65,7 @@ impl ByteUnit {
 #[cfg(test)]
 mod tests {
     #[test]
-    fn byte_unit_giga() {
+    fn byte_unit_gigabyte() {
         let unit = crate::ByteUnit::from_string("2G".to_string());
 
         assert!(unit.is_ok());
@@ -114,10 +114,10 @@ mod tests {
     }
 
     #[test]
-    fn display_memory_unit_unkown() {
+    fn display_memory_unit_unknown() {
         assert_eq!(
-            format!("{}", crate::Error::UnkownMemoryUnit),
-            "memory unit unkown".to_string()
+            format!("{}", crate::Error::UnknownMemoryUnit),
+            "memory unit unknown".to_string()
         );
     }
 
