@@ -10,7 +10,7 @@ pub struct MemoryLimit {
 }
 
 impl MemoryLimit {
-    pub fn from_string(mut input: String, env_variable: String) -> Result<Self, Error> {
+    pub fn from_string(mut input: String, env_variable: String) -> Result<Self, Error<'static>> {
         match ByteUnit::from_string(input.clone()) {
             Ok(unit) => {
                 input.pop();

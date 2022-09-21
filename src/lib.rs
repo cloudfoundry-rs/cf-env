@@ -39,7 +39,7 @@ pub fn is_cf_env() -> bool {
 }
 
 /// Get's the value from `CF_INSTANCE_ADDR` as a typed SocketAddr
-pub fn get_instance_address() -> Result<SocketAddr, Error> {
+pub fn get_instance_address() -> Result<SocketAddr, Error<'static>> {
     match env::var(CF_INSTANCE_ADDR) {
         Ok(addr_string) => match addr_string.parse::<SocketAddr>() {
             Ok(socket) => Ok(socket),
@@ -48,12 +48,12 @@ pub fn get_instance_address() -> Result<SocketAddr, Error> {
                 "Doesn't match the format of addr:ip".to_string(),
             )),
         },
-        Err(_) => Err(Error::EnvNotSet(CF_INSTANCE_ADDR.to_string())),
+        Err(_) => Err(Error::EnvNotSet(CF_INSTANCE_ADDR)),
     }
 }
 
 /// Get's the value from `CF_INSTANCE_GUID` as a typed GUID
-pub fn get_instance_guid() -> Result<GUID, Error> {
+pub fn get_instance_guid() -> Result<GUID, Error<'static>> {
     match env::var(CF_INSTANCE_GUID) {
         Ok(guid_string) => match GUID::parse(&guid_string) {
             Ok(result) => Ok(result),
@@ -62,12 +62,12 @@ pub fn get_instance_guid() -> Result<GUID, Error> {
                 "Isn't a valid guid".to_string(),
             )),
         },
-        Err(_) => Err(Error::EnvNotSet(CF_INSTANCE_GUID.to_string())),
+        Err(_) => Err(Error::EnvNotSet(CF_INSTANCE_GUID)),
     }
 }
 
 /// Get's the value from `CF_INSTANCE_INDEX` as a typed u128
-pub fn get_instance_index() -> Result<u128, Error> {
+pub fn get_instance_index() -> Result<u128, Error<'static>> {
     match env::var(CF_INSTANCE_INDEX) {
         Ok(index_string) => match index_string.parse::<u128>() {
             Ok(result) => Ok(result),
@@ -76,12 +76,12 @@ pub fn get_instance_index() -> Result<u128, Error> {
                 "Ins't a valid positive (u128) number".to_string(),
             )),
         },
-        Err(_) => Err(Error::EnvNotSet(CF_INSTANCE_INDEX.to_string())),
+        Err(_) => Err(Error::EnvNotSet(CF_INSTANCE_INDEX)),
     }
 }
 
 /// Get's the value from `CF_INSTANCE_IP` as a typed IpAddr
-pub fn get_instance_ip() -> Result<IpAddr, Error> {
+pub fn get_instance_ip() -> Result<IpAddr, Error<'static>> {
     match env::var(CF_INSTANCE_IP) {
         Ok(ip_string) => match ip_string.parse::<IpAddr>() {
             Ok(result) => Ok(result),
@@ -90,12 +90,12 @@ pub fn get_instance_ip() -> Result<IpAddr, Error> {
                 "Ins't a valid ip address".to_string(),
             )),
         },
-        Err(_) => Err(Error::EnvNotSet(CF_INSTANCE_IP.to_string())),
+        Err(_) => Err(Error::EnvNotSet(CF_INSTANCE_IP)),
     }
 }
 
 /// Get's the value from `CF_INSTANCE_INTERNAL_IP` as a typed IpAddr
-pub fn get_instance_internal_ip() -> Result<IpAddr, Error> {
+pub fn get_instance_internal_ip() -> Result<IpAddr, Error<'static>> {
     match env::var(CF_INSTANCE_INTERNAL_IP) {
         Ok(ip_string) => match ip_string.parse::<IpAddr>() {
             Ok(result) => Ok(result),
@@ -104,12 +104,12 @@ pub fn get_instance_internal_ip() -> Result<IpAddr, Error> {
                 "Ins't a valid ip address".to_string(),
             )),
         },
-        Err(_) => Err(Error::EnvNotSet(CF_INSTANCE_INTERNAL_IP.to_string())),
+        Err(_) => Err(Error::EnvNotSet(CF_INSTANCE_INTERNAL_IP)),
     }
 }
 
 /// Get's the value from `CF_INSTANCE_PORT` as a typed u16
-pub fn get_instance_port() -> Result<u16, Error> {
+pub fn get_instance_port() -> Result<u16, Error<'static>> {
     match env::var(CF_INSTANCE_PORT) {
         Ok(index_string) => match index_string.parse::<u16>() {
             Ok(result) => Ok(result),
@@ -118,12 +118,12 @@ pub fn get_instance_port() -> Result<u16, Error> {
                 "Ins't a valid positive (u16) number".to_string(),
             )),
         },
-        Err(_) => Err(Error::EnvNotSet(CF_INSTANCE_PORT.to_string())),
+        Err(_) => Err(Error::EnvNotSet(CF_INSTANCE_PORT)),
     }
 }
 
 /// Get's the value from `DATABASE_URL` as a typed Uri
-pub fn get_database_url() -> Result<Uri, Error> {
+pub fn get_database_url() -> Result<Uri, Error<'static>> {
     match env::var(DATABASE_URL) {
         Ok(index_string) => match index_string.parse::<Uri>() {
             Ok(result) => Ok(result),
@@ -132,20 +132,20 @@ pub fn get_database_url() -> Result<Uri, Error> {
                 "Ins't a valid uri".to_string(),
             )),
         },
-        Err(_) => Err(Error::EnvNotSet(DATABASE_URL.to_string())),
+        Err(_) => Err(Error::EnvNotSet(DATABASE_URL)),
     }
 }
 
 /// Get's the value from `HOME` as a typed PathBuf
-pub fn get_home() -> Result<PathBuf, Error> {
+pub fn get_home() -> Result<PathBuf, Error<'static>> {
     match env::var(HOME) {
         Ok(home_string) => Ok(PathBuf::from(home_string)),
-        Err(_) => Err(Error::EnvNotSet(HOME.to_string())),
+        Err(_) => Err(Error::EnvNotSet(HOME)),
     }
 }
 
 /// Get's the value from `LANG` as a typed Locale
-pub fn get_lang() -> Result<Locale, Error> {
+pub fn get_lang() -> Result<Locale, Error<'static>> {
     match env::var(LANG) {
         Ok(lang_string) => {
             let parse_result = panic::catch_unwind(|| Locale::from_str(&lang_string));
@@ -165,12 +165,12 @@ pub fn get_lang() -> Result<Locale, Error> {
                 )),
             }
         }
-        Err(_) => Err(Error::EnvNotSet(LANG.to_string())),
+        Err(_) => Err(Error::EnvNotSet(LANG)),
     }
 }
 
 /// Get's the value from `MEMORY_LIMIT` as a typed MemoryLimit
-pub fn get_memory_limit() -> Result<MemoryLimit, Error> {
+pub fn get_memory_limit() -> Result<MemoryLimit, Error<'static>> {
     match env::var(MEMORY_LIMIT) {
         Ok(memory_string) => {
             match MemoryLimit::from_string(memory_string, MEMORY_LIMIT.to_string()) {
@@ -181,12 +181,12 @@ pub fn get_memory_limit() -> Result<MemoryLimit, Error> {
                 )),
             }
         }
-        Err(_) => Err(Error::EnvNotSet(MEMORY_LIMIT.to_string())),
+        Err(_) => Err(Error::EnvNotSet(MEMORY_LIMIT)),
     }
 }
 
 /// Get's the value from `PORT` as a typed 16
-pub fn get_port() -> Result<u16, Error> {
+pub fn get_port() -> Result<u16, Error<'static>> {
     match env::var(PORT) {
         Ok(port_string) => match port_string.parse::<u16>() {
             Ok(result) => Ok(result),
@@ -195,44 +195,44 @@ pub fn get_port() -> Result<u16, Error> {
                 "Ins't a valid positive (u16) number".to_string(),
             )),
         },
-        Err(_) => Err(Error::EnvNotSet(PORT.to_string())),
+        Err(_) => Err(Error::EnvNotSet(PORT)),
     }
 }
 
 /// Get's the value from `PWD` as a typed PathBuf
-pub fn get_pwd() -> Result<PathBuf, Error> {
+pub fn get_pwd() -> Result<PathBuf, Error<'static>> {
     match env::var(PWD) {
         Ok(pwd_string) => Ok(PathBuf::from(pwd_string)),
-        Err(_) => Err(Error::EnvNotSet(PWD.to_string())),
+        Err(_) => Err(Error::EnvNotSet(PWD)),
     }
 }
 
 /// Get's the value from `TMPDIR` as a typed PathBuf
-pub fn get_tmp_dir() -> Result<PathBuf, Error> {
+pub fn get_tmp_dir() -> Result<PathBuf, Error<'static>> {
     match env::var(TMPDIR) {
         Ok(tmp_dir) => Ok(PathBuf::from(tmp_dir)),
-        Err(_) => Err(Error::EnvNotSet(TMPDIR.to_string())),
+        Err(_) => Err(Error::EnvNotSet(TMPDIR)),
     }
 }
 
 /// Get's the value from `USER`
-pub fn get_user() -> Result<String, Error> {
+pub fn get_user() -> Result<String, Error<'static>> {
     match env::var(USER) {
         Ok(user_string) => Ok(user_string),
-        Err(_) => Err(Error::EnvNotSet(USER.to_string())),
+        Err(_) => Err(Error::EnvNotSet(USER)),
     }
 }
 
 type ServiceMap = HashMap<String, Vec<Service>>;
 
 /// Get's the value from `VCAP_SERVICES` as a typed HashMap of Strings and a list of Services
-pub fn get_services() -> Result<ServiceMap, Error> {
+pub fn get_services() -> Result<ServiceMap, Error<'static>> {
     match env::var(VCAP_SERVICES) {
         Ok(services) => match serde_json::from_str::<ServiceMap>(&services) {
             Ok(value) => Ok(value),
             Err(_err) => Err(Error::JsonMalformed(VCAP_SERVICES.to_string())),
         },
-        Err(_) => Err(Error::EnvNotSet(VCAP_SERVICES.to_string())),
+        Err(_) => Err(Error::EnvNotSet(VCAP_SERVICES)),
     }
 }
 
@@ -281,14 +281,14 @@ where
                             Err(_) => {
                                 return Err(Error::JsonMalformed(format!(
                                     "{}.credentials",
-                                    service.name
+                                    service.name.to_owned()
                                 )))
                             }
                         }
                     }
                 }
             }
-            Err(Error::ServiceNotPresent(name.to_string()))
+            Err(Error::ServiceNotPresent(name))
         }
         Err(e) => Err(e),
     }
@@ -334,25 +334,23 @@ where
                 let service_json = serde_json::to_string(services.get(type_name).unwrap()).unwrap();
                 match serde_json::from_str::<Vec<Service<T>>>(&service_json) {
                     Ok(service) => return Ok(service),
-                    Err(_err) => {
-                        return Err(Error::JsonMalformed(format!("<{}>.credentials", type_name)));
-                    }
+                    Err(_err) => return Err(Error::JsonMalformed(format!("<{}>.credentials", type_name))),
                 }
             }
-            Err(Error::ServiceTypeNotPresent(type_name.to_string()))
+            Err(Error::ServiceTypeNotPresent(type_name))
         }
         Err(e) => Err(e),
     }
 }
 
 /// Get's you the information from `VCAP_APPLICATION` as a typed Application
-pub fn get_application_info() -> Result<Application, Error> {
+pub fn get_application_info() -> Result<Application, Error<'static>> {
     match env::var(VCAP_APPLICATION) {
         Ok(application) => match serde_json::from_str::<Application>(&application) {
             Ok(value) => Ok(value),
             Err(_err) => Err(Error::JsonMalformed(VCAP_APPLICATION.to_string())),
         },
-        Err(_) => Err(Error::EnvNotSet(VCAP_APPLICATION.to_string())),
+        Err(_) => Err(Error::EnvNotSet(VCAP_APPLICATION)),
     }
 }
 

@@ -2,16 +2,16 @@ use serde::{Deserialize, Serialize};
 use std::fmt::{Display, Formatter, Result as FmtResult};
 
 #[derive(Serialize, Deserialize, PartialEq, Debug)]
-pub enum Error {
-    EnvNotSet(String),
+pub enum Error<'a> {
+    EnvNotSet(&'a str),
     EnvMalformed(String, String),
     JsonMalformed(String),
-    ServiceNotPresent(String),
-    ServiceTypeNotPresent(String),
+    ServiceNotPresent(&'a str),
+    ServiceTypeNotPresent(&'a str),
     UnknownMemoryUnit,
 }
 
-impl Display for Error {
+impl Display for Error<'_> {
     fn fmt(&self, formatter: &mut Formatter<'_>) -> FmtResult {
         match &*self {
             Self::EnvNotSet(variable_name) => write!(
@@ -50,8 +50,8 @@ pub enum ByteUnit {
     Megabyte,
 }
 
-impl ByteUnit {
-    pub fn from_string(input: String) -> Result<Self, Error> {
+impl<'a> ByteUnit {
+    pub fn from_string(input: String) -> Result<Self, Error<'a>> {
         let last_char = input.chars().rev().next().unwrap();
 
         match last_char {
@@ -75,7 +75,7 @@ mod tests {
     #[test]
     fn display_env_not_set() {
         assert_eq!(
-            format!("{}", crate::Error::EnvNotSet(crate::USER.to_string())),
+            format!("{}", crate::Error::EnvNotSet(crate::USER)),
             format!("environment variable {:?} is not set", crate::USER)
         );
     }
@@ -93,7 +93,7 @@ mod tests {
         assert_eq!(
             format!(
                 "{}",
-                crate::Error::ServiceNotPresent(crate::USER.to_string())
+                crate::Error::ServiceNotPresent(crate::USER)
             ),
             format!("service {:?} is not present in VCAP_SERVICES", crate::USER)
         );
@@ -104,7 +104,7 @@ mod tests {
         assert_eq!(
             format!(
                 "{}",
-                crate::Error::ServiceTypeNotPresent(crate::USER.to_string())
+                crate::Error::ServiceTypeNotPresent(crate::USER)
             ),
             format!(
                 "service type {:?} is not present in VCAP_SERVICES",
