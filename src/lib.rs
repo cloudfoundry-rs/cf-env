@@ -334,7 +334,9 @@ where
                 let service_json = serde_json::to_string(services.get(type_name).unwrap()).unwrap();
                 match serde_json::from_str::<Vec<Service<T>>>(&service_json) {
                     Ok(service) => return Ok(service),
-                    Err(_err) => return Err(Error::JsonMalformed(format!("<{}>.credentials", type_name))),
+                    Err(_err) => {
+                        return Err(Error::JsonMalformed(format!("<{type_name}>.credentials")))
+                    }
                 }
             }
             Err(Error::ServiceTypeNotPresent(type_name))
@@ -467,7 +469,7 @@ mod tests {
         std::env::set_var("CF_INSTANCE_ADDR", "10.24.8.2:port");
         let instance_addr_result = crate::get_instance_address();
 
-        assert!(!instance_addr_result.is_ok());
+        assert!(instance_addr_result.is_err());
     }
 
     #[test]
@@ -475,7 +477,7 @@ mod tests {
         std::env::remove_var(crate::CF_INSTANCE_ADDR);
         let instance_addr_result = crate::get_instance_address();
 
-        assert!(!instance_addr_result.is_ok());
+        assert!(instance_addr_result.is_err());
     }
 
     #[test]
@@ -483,7 +485,7 @@ mod tests {
         std::env::set_var("CF_INSTANCE_ADDR", "host:8080");
         let instance_addr_result = crate::get_instance_address();
 
-        assert!(!instance_addr_result.is_ok());
+        assert!(instance_addr_result.is_err());
     }
 
     #[test]
@@ -503,7 +505,7 @@ mod tests {
         std::env::set_var("CF_INSTANCE_GUID", "046463bc-1ba9-4046-bf5a-bd95672ee81");
         let guid_result = crate::get_instance_guid();
 
-        assert!(!guid_result.is_ok());
+        assert!(guid_result.is_err());
     }
 
     #[test]
@@ -511,7 +513,7 @@ mod tests {
         std::env::remove_var(crate::CF_INSTANCE_GUID);
         let guid_result = crate::get_instance_guid();
 
-        assert!(!guid_result.is_ok());
+        assert!(guid_result.is_err());
     }
 
     #[test]
@@ -528,7 +530,7 @@ mod tests {
         std::env::set_var("CF_INSTANCE_INDEX", "-1");
         let index_result = crate::get_instance_index();
 
-        assert!(!index_result.is_ok());
+        assert!(index_result.is_err());
     }
 
     #[test]
@@ -536,7 +538,7 @@ mod tests {
         std::env::remove_var(crate::CF_INSTANCE_INDEX);
         let index_result = crate::get_instance_index();
 
-        assert!(!index_result.is_ok());
+        assert!(index_result.is_err());
     }
 
     #[test]
@@ -544,7 +546,7 @@ mod tests {
         std::env::set_var("CF_INSTANCE_INDEX", "hello");
         let index_result = crate::get_instance_index();
 
-        assert!(!index_result.is_ok());
+        assert!(index_result.is_err());
     }
 
     #[test]
@@ -552,7 +554,7 @@ mod tests {
         std::env::set_var("CF_INSTANCE_IP", "me.com");
         let index_result = crate::get_instance_ip();
 
-        assert!(!index_result.is_ok());
+        assert!(index_result.is_err());
     }
 
     #[test]
@@ -560,7 +562,7 @@ mod tests {
         std::env::remove_var(crate::CF_INSTANCE_IP);
         let index_result = crate::get_instance_ip();
 
-        assert!(!index_result.is_ok());
+        assert!(index_result.is_err());
     }
 
     #[test]
@@ -568,7 +570,7 @@ mod tests {
         std::env::set_var("CF_INSTANCE_IP", "670.120.01.94");
         let index_result = crate::get_instance_ip();
 
-        assert!(!index_result.is_ok());
+        assert!(index_result.is_err());
     }
 
     #[test]
@@ -585,7 +587,7 @@ mod tests {
         std::env::set_var("CF_INSTANCE_INTERNAL_IP", "me.com");
         let index_result = crate::get_instance_internal_ip();
 
-        assert!(!index_result.is_ok());
+        assert!(index_result.is_err());
     }
 
     #[test]
@@ -593,7 +595,7 @@ mod tests {
         std::env::remove_var(crate::CF_INSTANCE_INTERNAL_IP);
         let index_result = crate::get_instance_internal_ip();
 
-        assert!(!index_result.is_ok());
+        assert!(index_result.is_err());
     }
 
     #[test]
@@ -601,7 +603,7 @@ mod tests {
         std::env::set_var("CF_INSTANCE_INTERNAL_IP", "670.120.01.94");
         let index_result = crate::get_instance_internal_ip();
 
-        assert!(!index_result.is_ok());
+        assert!(index_result.is_err());
     }
 
     #[test]
@@ -627,7 +629,7 @@ mod tests {
         std::env::set_var("CF_INSTANCE_PORT", "hello");
         let port_result = crate::get_instance_port();
 
-        assert!(!port_result.is_ok());
+        assert!(port_result.is_err());
     }
 
     #[test]
@@ -635,7 +637,7 @@ mod tests {
         std::env::remove_var(crate::CF_INSTANCE_PORT);
         let port_result = crate::get_instance_port();
 
-        assert!(!port_result.is_ok());
+        assert!(port_result.is_err());
     }
 
     #[test]
@@ -652,7 +654,7 @@ mod tests {
         std::env::set_var("PORT", "hello");
         let port_result = crate::get_port();
 
-        assert!(!port_result.is_ok());
+        assert!(port_result.is_err());
     }
 
     #[test]
@@ -660,7 +662,7 @@ mod tests {
         std::env::remove_var(crate::PORT);
         let port_result = crate::get_port();
 
-        assert!(!port_result.is_ok());
+        assert!(port_result.is_err());
     }
 
     #[test]
@@ -677,7 +679,7 @@ mod tests {
         std::env::set_var("LANG", "hello");
         let lang_result = crate::get_lang();
 
-        assert!(!lang_result.is_ok());
+        assert!(lang_result.is_err());
     }
 
     #[test]
@@ -685,7 +687,7 @@ mod tests {
         std::env::remove_var(crate::LANG);
         let lang_result = crate::get_lang();
 
-        assert!(!lang_result.is_ok());
+        assert!(lang_result.is_err());
     }
 
     #[test]
@@ -702,7 +704,7 @@ mod tests {
         std::env::remove_var(crate::USER);
         let user_result = crate::get_user();
 
-        assert!(!user_result.is_ok());
+        assert!(user_result.is_err());
     }
 
     #[test]
@@ -710,7 +712,7 @@ mod tests {
         std::env::set_var("MEMORY_LIMIT", "512K");
         let memory_limit_result = crate::get_memory_limit();
 
-        assert!(!memory_limit_result.is_ok());
+        assert!(memory_limit_result.is_err());
     }
 
     #[test]
@@ -718,7 +720,7 @@ mod tests {
         std::env::set_var("MEMORY_LIMIT", "-512M");
         let memory_limit_result = crate::get_memory_limit();
 
-        assert!(!memory_limit_result.is_ok());
+        assert!(memory_limit_result.is_err());
     }
 
     #[test]
@@ -726,7 +728,7 @@ mod tests {
         std::env::remove_var(crate::MEMORY_LIMIT);
         let memory_limit_result = crate::get_memory_limit();
 
-        assert!(!memory_limit_result.is_ok());
+        assert!(memory_limit_result.is_err());
     }
 
     #[test]
@@ -763,7 +765,7 @@ mod tests {
         std::env::set_var("VCAP_APPLICATION", data);
         let app_info_result = crate::get_application_info();
 
-        assert!(!app_info_result.is_ok());
+        assert!(app_info_result.is_err());
     }
 
     #[test]
@@ -771,7 +773,7 @@ mod tests {
         std::env::remove_var("VCAP_APPLICATION");
         let app_info_result = crate::get_application_info();
 
-        assert!(!app_info_result.is_ok());
+        assert!(app_info_result.is_err());
     }
 
     #[test]
@@ -792,7 +794,7 @@ mod tests {
         std::env::remove_var("VCAP_SERVICES");
         let service_info = crate::get_services();
 
-        assert!(!service_info.is_ok());
+        assert!(service_info.is_err());
     }
 
     #[test]
@@ -804,7 +806,7 @@ mod tests {
 
         let service_info = crate::get_services();
 
-        assert!(!service_info.is_ok());
+        assert!(service_info.is_err());
     }
 
     #[test]
@@ -846,7 +848,7 @@ mod tests {
         }
         let service_info = crate::get_service_by_name::<DbCredentials>("my-db");
 
-        assert!(!service_info.is_ok());
+        assert!(service_info.is_err());
     }
 
     #[test]
@@ -855,7 +857,7 @@ mod tests {
 
         let service_info = crate::get_service_by_name::<serde_json::Value>("the-db");
 
-        assert!(!service_info.is_ok());
+        assert!(service_info.is_err());
     }
 
     #[test]
@@ -864,7 +866,7 @@ mod tests {
 
         let service_info = crate::get_service_by_name::<serde_json::Value>("the-db");
 
-        assert!(!service_info.is_ok());
+        assert!(service_info.is_err());
     }
 
     #[test]
@@ -911,7 +913,7 @@ mod tests {
         }
         let service_info = crate::get_services_by_type::<DbCredentials>("mongodb");
 
-        assert!(!service_info.is_ok());
+        assert!(service_info.is_err());
     }
 
     #[test]
@@ -920,7 +922,7 @@ mod tests {
 
         let service_info = crate::get_services_by_type::<serde_json::Value>("some-type");
 
-        assert!(!service_info.is_ok());
+        assert!(service_info.is_err());
     }
 
     #[test]
@@ -929,7 +931,7 @@ mod tests {
 
         let service_info = crate::get_services_by_type::<serde_json::Value>("some-type");
 
-        assert!(!service_info.is_ok());
+        assert!(service_info.is_err());
     }
 
     #[test]
@@ -949,7 +951,7 @@ mod tests {
         std::env::set_var("DATABASE_URL", "mysql:/root@root@192.168.2.3:3098");
         let database_url_result = crate::get_database_url();
 
-        assert!(!database_url_result.is_ok());
+        assert!(database_url_result.is_err());
     }
 
     #[test]
@@ -957,7 +959,7 @@ mod tests {
         std::env::remove_var(crate::DATABASE_URL);
         let database_url_result = crate::get_database_url();
 
-        assert!(!database_url_result.is_ok());
+        assert!(database_url_result.is_err());
     }
 
     #[test]
@@ -974,7 +976,7 @@ mod tests {
         std::env::remove_var("HOME");
         let home_result = crate::get_home();
 
-        assert!(!home_result.is_ok());
+        assert!(home_result.is_err());
     }
 
     #[test]
@@ -991,7 +993,7 @@ mod tests {
         std::env::remove_var("PWD");
         let pwd_result = crate::get_pwd();
 
-        assert!(!pwd_result.is_ok());
+        assert!(pwd_result.is_err());
     }
 
     #[test]
@@ -1008,7 +1010,7 @@ mod tests {
         std::env::remove_var("TMPDIR");
         let tmp_dir_result = crate::get_tmp_dir();
 
-        assert!(!tmp_dir_result.is_ok());
+        assert!(tmp_dir_result.is_err());
     }
 
     #[test]

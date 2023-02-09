@@ -13,31 +13,26 @@ pub enum Error<'a> {
 
 impl Display for Error<'_> {
     fn fmt(&self, formatter: &mut Formatter<'_>) -> FmtResult {
-        match &*self {
+        match self {
             Self::EnvNotSet(variable_name) => write!(
                 formatter,
-                "environment variable {:?} is not set",
-                variable_name
+                "environment variable {variable_name:?} is not set",
             ),
             Self::ServiceNotPresent(service_name) => write!(
                 formatter,
-                "service {:?} is not present in VCAP_SERVICES",
-                service_name
+                "service {service_name:?} is not present in VCAP_SERVICES",
             ),
             Self::ServiceTypeNotPresent(service_type_name) => write!(
                 formatter,
-                "service type {:?} is not present in VCAP_SERVICES",
-                service_type_name
+                "service type {service_type_name:?} is not present in VCAP_SERVICES",
             ),
             Self::JsonMalformed(variable_to_parse_name) => write!(
                 formatter,
-                "the json from {:?} could not be parsed",
-                variable_to_parse_name
+                "the json from {variable_to_parse_name:?} could not be parsed"
             ),
             Self::EnvMalformed(variable_name, comment) => write!(
                 formatter,
-                "the env variable {:?} does not match the required criterial. {:?}",
-                variable_name, comment
+                "the env variable {variable_name:?} does not match the required criterial. {comment:?}",
             ),
             Self::UnknownMemoryUnit => write!(formatter, "memory unit unknown"),
         }
@@ -91,10 +86,7 @@ mod tests {
     #[test]
     fn display_service_not_present() {
         assert_eq!(
-            format!(
-                "{}",
-                crate::Error::ServiceNotPresent(crate::USER)
-            ),
+            format!("{}", crate::Error::ServiceNotPresent(crate::USER)),
             format!("service {:?} is not present in VCAP_SERVICES", crate::USER)
         );
     }
@@ -102,10 +94,7 @@ mod tests {
     #[test]
     fn display_service_type_not_present() {
         assert_eq!(
-            format!(
-                "{}",
-                crate::Error::ServiceTypeNotPresent(crate::USER)
-            ),
+            format!("{}", crate::Error::ServiceTypeNotPresent(crate::USER)),
             format!(
                 "service type {:?} is not present in VCAP_SERVICES",
                 crate::USER
