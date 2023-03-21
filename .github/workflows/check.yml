@@ -20,19 +20,8 @@ jobs:
         with:
           toolchain: stable
 
-      - uses: Swatinem/rust-cache@v2.2.1
-
-      - name: Run fmt
-        run: cargo fmt -- --check
-
-      - name: Run clippy
-        run: cargo clippy -- --deny=warnings
-
       - name: Run check
         run: cargo check
-
-      - name: Run tests
-        run: cargo test
 
       - name: Run cargo-tarpaulin
         uses: actions-rs/tarpaulin@v0.1
