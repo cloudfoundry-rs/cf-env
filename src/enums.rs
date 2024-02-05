@@ -47,7 +47,7 @@ pub enum ByteUnit {
 
 impl<'a> ByteUnit {
     pub fn from_string(input: String) -> Result<Self, Error<'a>> {
-        let last_char = input.chars().rev().next().unwrap();
+        let last_char = input.chars().next_back().unwrap();
 
         match last_char {
             'M' | 'm' => Ok(Self::Megabyte),

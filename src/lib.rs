@@ -889,7 +889,7 @@ mod tests {
         assert!(service_info.is_ok());
 
         let data = service_info.unwrap();
-        let data: &crate::Service<DbCredentials> = data.get(0).unwrap();
+        let data: &crate::Service<DbCredentials> = data.first().unwrap();
 
         assert_eq!(data.name, "my-db");
         assert_eq!(data.label, "mongodb");
