@@ -330,7 +330,7 @@ where
 {
     match get_services() {
         Ok(services) => {
-            if services.get(type_name).is_some() {
+            if services.contains_key(type_name) {
                 let service_json = serde_json::to_string(services.get(type_name).unwrap()).unwrap();
                 match serde_json::from_str::<Vec<Service<T>>>(&service_json) {
                     Ok(service) => return Ok(service),
